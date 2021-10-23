@@ -1,11 +1,9 @@
 package com.example.airlinesManagment;
 
-
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
-
 import org.springframework.hateoas.CollectionModel;
 import org.springframework.hateoas.EntityModel;
 import org.springframework.hateoas.IanaLinkRelations;
@@ -16,7 +14,6 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
-
 import static org.springframework.hateoas.server.mvc.WebMvcLinkBuilder.*;
 
 @RestController
@@ -25,17 +22,12 @@ class AirlineController{
     private final AirlineRepository repository;
     private final AirlineModelAssembler assembler;
     private final DestinationRepository destinationRepository;
-    // private final AircraftRepository aircraftRepository;
-    // private final AircraftModelAssembler aircraftAssembler;
 
     public AirlineController(AirlineRepository repository, AirlineModelAssembler assembler,
-        // AircraftRepository aircraftRepository, AircraftModelAssembler aircraftAssembler,
         DestinationRepository destinationRepository) {
       this.repository = repository;
       this.assembler = assembler;
       this.destinationRepository = destinationRepository;
-      // this.aircraftRepository = aircraftRepository;
-      // this.aircraftAssembler = aircraftAssembler;
     }
 
     @PostMapping("/airlines")
@@ -88,14 +80,10 @@ class AirlineController{
 
       if (airline.isPresent()){
         Airline currAirline = airline.get();
-        // Location airlineLocation = currAirline.getHomeBaseLocation().getLocation();
 
         destinationsDistance = currAirline.getDistanceFromDestinations(destinationRepository.findAll());
-        // destinationsDistance = destinationRepository.findAll().stream() 
-        //     .map(destination -> new DestinationsDistance(destination.getName(), destination.getDistanceTo(airlineLocation)))
-        //     .collect(Collectors.toList());
 
-            return new ResponseEntity<List<DestinationsDistance>>(destinationsDistance, HttpStatus.OK);
+        return new ResponseEntity<List<DestinationsDistance>>(destinationsDistance, HttpStatus.OK);
       }
 
       return new ResponseEntity<>(HttpStatus.NOT_FOUND);
