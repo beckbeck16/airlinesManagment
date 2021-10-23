@@ -15,7 +15,6 @@ class LoadDatabase {
   CommandLineRunner initDatabase(AirlineRepository airlineRepository, DestinationRepository destinationRepository, AircraftRepository aircraftRepository) {
 
     return args -> {
-      log.info("becky");
 
       Destination desti = new Destination("Tel Aviv", new Location(34.8, 32.0));
       destinationRepository.save(desti);
@@ -34,7 +33,7 @@ class LoadDatabase {
 
       Destination desti3 = new Destination("Dubai", new Location(55.29, 25.27));
       destinationRepository.save(desti3);
-      airlineRepository.save(new Airline("Etihad", 5000, desti3));
+      airlineRepository.save(new Airline("Emirates", 5000, desti3));
 
     airlineRepository.findAll().forEach(airline -> log.info("Preloaded " + airline));
       
